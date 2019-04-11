@@ -1,0 +1,21 @@
+$color: red;
+$fontStyle: italic;
+
+
+.res {
+  color: $color;
+  font-style: $fontStyle;
+}
+
+
+.assert-item {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+.success {
+  color: green;
+}
+.fail {
+  color: red;
+  text-decoration:  line-through;
+}
