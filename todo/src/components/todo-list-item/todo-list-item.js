@@ -3,31 +3,36 @@ import React from 'react';
 import './todo-list-item.css';
 
 export default class TodoListItem extends React.Component {
-    // constructor(){
-    //     super();
-    //     this.onLabelClick = () => {
-    //         console.log(`Done: ${this.props.label}`);
-    //     }
-    // }
-    
-    onLabelClick() {
-        console.log(`Done: ${this.props.label}`);
+    constructor(){
+        super();
+        this.state = {
+            done: false
+        };
     }
+    onLabelClick = () => {
+        console.log(`Done: ${this.props.label}`);
+        this.setState({ // правило после инициализации state его больше нельзя изменять напрямую, только через ф-ю setState(), которая говорит ф-ии render() что компонент изменился и его надо перерендерить
+            done: !this.state.done
+        });
+    };
+
     render() {
-        const {label, important = false} = this.props; // деструктурирование props потому что ф-я render() не принимает параметры
+        const {label, important = false} = this.props, // деструктурирование props потому что ф-я render() не принимает параметры
+              {done} = this.state;
+        console.log('done:', done);
+        let classNames = 'todo-list-item';
+        classNames += done ? ' done' : '';
         const style = {
             color: important ? 'steelblue' : 'black',
             fontWeight: important ? 'bold' : 'normal'
         };
 
         return (
-            <span className="todo-list-item">
+            <span className={classNames}>
               <span
                   className="todo-list-item-label"
                   // onClick={()=>console.log(`Done: ${label}`)}
-                  onClick={this.onLabelClick.bind(this)} // передаём не вызов ф-ции, а саму ф-цию. Bind нужен для того чтобы сохранить правильный контекст (т.к. это уже не стрелочная ф-я и контекст теряется)
-                  // но bind() не очень хороший способ привязать ф-ю к контексту, потому что каждый раз при клике будет создаваться новая ф-я (так работает bind())
-                  // гораздо лучше создать ф-ю в конструкторе класса и через стрелочную ф-ю привязать к ней контекст данного экземпляра класса а не прототипа. В этом случае не онужно делать bind. В дальнейшем будем использовать такой способ.
+                  onClick={this.onLabelClick}
                   style={style}>
                 {label}
               </span>
