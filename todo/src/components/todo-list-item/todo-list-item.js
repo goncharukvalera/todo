@@ -11,14 +11,16 @@ export default class TodoListItem extends React.Component {
         };
     }
     onLabelClick = () => {
-        console.log(`Done: ${this.props.label}`);
-        this.setState({ // правило после инициализации state его больше нельзя изменять напрямую, только через ф-ю setState(), которая говорит ф-ии render() что компонент изменился и его надо перерендерить
-            done: !this.state.done
+        // setState() работает асинхронно и на момент установки нового state текущий state не всегда имеет самую актуальную версию, 
+        // поэтому чтобы избежать тяжело отлавливаемых ошибок нужно немного изменить вызов ф-и setState() с явным указанием state,
+        // тогда React будет рендерить компонент только после реального обновления state
+        this.setState((state) => { 
+            return {done: !state.done}
         });
     };
     onMarkImportant = () => {
-        this.setState({
-            important: !this.state.important // не обязательно перечислять весь новый state, React подставит только отличия, это очень удобная особенность, котороая позволяет писать более чистый код
+        this.setState(({important}) => { // можно сразу реструктурировать important из state
+            return {important: !important}
         });
     };
 
