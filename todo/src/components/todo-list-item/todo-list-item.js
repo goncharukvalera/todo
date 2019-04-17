@@ -25,7 +25,7 @@ export default class TodoListItem extends React.Component {
     };
 
     render() {
-        const {label} = this.props, // деструктурирование props потому что ф-я render() не принимает параметры
+        const {label, onDeleted} = this.props, // деструктурирование props потому что ф-я render() не принимает параметры
               {done, important} = this.state;
         console.log('done:', done, '\n', 'important:', important);
         let classNames = 'todo-list-item';
@@ -45,9 +45,13 @@ export default class TodoListItem extends React.Component {
                       onClick={this.onMarkImportant}>
                 <i className="fa fa-exclamation"/>
               </button>
-        
+              {/* Для того чтобы удалить компонент нам нужно его удалить из data, потому что просто так компонент не может удалить сам себя
+              поэтому нам нужно пробросить событие удаления с кнопки внутри компонента до уровня App. 
+              Сделать это можно через кастомные события (обычные функции, которые мы будем вызывать по цепочке)
+              Пробрасывать события мы будем через props*/}
               <button type="button"
-                      className="btn btn-outline-danger btn-sm float-right">
+                      className="btn btn-outline-danger btn-sm float-right"
+                      onClick={onDeleted}> 
                 <i className="fa fa-trash-o"/>
               </button>
             </span>
