@@ -4,6 +4,7 @@ import AppHeader from './../app-header';
 import SearchPanel from './../search-panel/search-panel';
 import TodoList from './../todo-list/todo-list';
 import ItemStatusFilter from './../item-status-filter/item-status-filter';
+import ItemAddForm from './../item-add-form/item-add-form';
 import './app.css';
 
 export default class App extends Component {
@@ -29,12 +30,15 @@ export default class App extends Component {
             // но так мы нарушаем один из основных принципов React - мы меняем state напрямую, так делать нельзя! 
             // Поэтому передадим новый массив состоящий из двух частей (до текущего и после текущего), а потом объединим их
             const newState = [
-                ... todoData.slice(0, index), // с помощью spread оператора сразу формируем новый массив из частей state
-                ... todoData.slice(index + 1)
+                ...todoData.slice(0, index), // с помощью spread оператора сразу формируем новый массив из частей state
+                ...todoData.slice(index + 1)
             ];
             return {todoData: newState}
         });
     };
+    addItem = (text) => {
+        console.log('Added', text);
+    }
 
     render() {
         return (
@@ -49,6 +53,7 @@ export default class App extends Component {
               todos={this.state.todoData}
               onDeleted={ (id) => {this.deleteItem(id)}}
           />
+            <ItemAddForm onItemAdded={this.addItem}/>
         </div>
         );
     }
