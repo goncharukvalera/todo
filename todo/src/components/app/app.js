@@ -37,8 +37,23 @@ export default class App extends Component {
         });
     };
     addItem = (text) => {
-        console.log('Added', text);
-    }
+        // 1 - сгенерировать уникальный id
+        // 2 - добавить элемент в массив
+        const d = new Date,
+            newItem = {
+                label: text,
+                important: false,
+                id: d.getTime()
+            };
+        this.setState(({todoData}) => {
+            return  {
+                todoData: [
+                    ...todoData,
+                    newItem
+                ]
+            }
+        });
+    };
 
     render() {
         return (
