@@ -13,6 +13,7 @@ export default class ItemAddForm extends Component {
     onSubmit = e => {
         e.preventDefault();
         this.props.onItemAdded(this.state.label);
+        this.setState({label: ''});
     };
     render() {
         return <form className="item-add-form"
@@ -21,6 +22,7 @@ export default class ItemAddForm extends Component {
                     className="new-item-name form-control"
                     onChange={this.onItemChange}
                     placeholder="What needs to be done"
+                    value={this.state.label} // делаем компонент контролируемым, т.е. еомпонент котролируется из state
             />
             <button className="add-item btn btn-outline-secondary">
                 Add Item
