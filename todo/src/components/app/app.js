@@ -57,22 +57,28 @@ export default class App extends Component {
             }
         });
     };
+    toggleProp = (arr, id, propName) => {
+        const index = arr.findIndex((el) => el.id === id),
+            oldItem = arr[index],
+            newItem = {...oldItem, [propName]: !oldItem[propName]};
+        return [
+            ...arr.slice(0, index),
+            newItem,
+            ...arr.slice(index + 1)
+        ];
+    };
     toggleImportant = id => {
-        console.log('Toggle Important', id);
+        this.setState(({todoData}) => {
+            return {
+                todoData: this.toggleProp(todoData, id, 'important')
+            }
+        });
     };
     toggleDone = id => {
         this.setState(({todoData}) => {
-            // 1 - обновить объект
-            const index = todoData.findIndex((el) => el.id === id),
-                oldItem = todoData[index],
-                newItem = {...oldItem, done: !oldItem.done} // чтобы не изменять старый объект в текущем state
-            // 2 - создать новый массив state с обновлённым элементом
-            const newState = [
-                ...todoData.slice(0, index),
-                newItem,
-                ...todoData.slice(index + 1)
-            ];
-            return {todoData: newState} // после этого компонент App знает об изменившемся состоянии item
+            return {
+                todoData: this.toggleProp(todoData, id, 'done')
+            }
         });
     };
 
