@@ -72,14 +72,17 @@ export default class App extends Component {
                 newItem,
                 ...todoData.slice(index + 1)
             ];
-            return {todoData: newState}
+            return {todoData: newState} // после этого компонент App знает об изменившемся состоянии item
         });
     };
 
     render() {
+        const {todoData} = this.state,
+            doneCount = todoData.filter(el => el.done).length,
+            todoCount = todoData.length - doneCount;
         return (
         <div className="todo-app">
-          <AppHeader toDo={1} done={3} />
+          <AppHeader toDo={todoCount} done={doneCount} />
           <div className="top-panel d-flex">
             <SearchPanel />
             <ItemStatusFilter />
