@@ -52,7 +52,7 @@ export default class App extends Component {
             return  {
                 todoData: [
                     ...todoData,
-                    this.createTodoItem('New Item')
+                    this.createTodoItem(text)
                 ]
             }
         });
