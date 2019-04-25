@@ -39,7 +39,7 @@ export default class App extends Component {
     addItem = (text) => {
         // 1 - сгенерировать уникальный id
         // 2 - добавить элемент в массив
-        const d = new Date,
+        const d = new Date(),
             newItem = {
                 label: text,
                 important: false,
@@ -54,6 +54,12 @@ export default class App extends Component {
             }
         });
     };
+    toggleImportant = id => {
+        console.log('Toggle Important', id);
+    };
+    toggleDone = id => {
+        console.log('Toggle Done', id);
+    };
 
     render() {
         return (
@@ -66,7 +72,9 @@ export default class App extends Component {
         
           <TodoList 
               todos={this.state.todoData}
-              onDeleted={ (id) => {this.deleteItem(id)}}
+              onDeleted={(id) => {this.deleteItem(id)}}
+              onToggleImportant={this.toggleImportant}
+              onToggleDone={this.toggleDone}
           />
             <ItemAddForm onItemAdded={this.addItem}/>
         </div>

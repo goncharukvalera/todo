@@ -2,7 +2,7 @@ import React from 'react';
 import TodoListItem from '../todo-list-item/todo-list-item';
 import './todo-list.css';
 
-const TodoList = ({todos, onDeleted}) => {
+const TodoList = ({todos, onDeleted, onToggleImportant, onToggleDone}) => {
     const items = todos.map((item) => {
         const {id, ...itemProps} = item; /*Деструктуризация объекта со спред оператором, когда из свойств объекта убирается то которое мы занесли в отдельную переменную*/
         return ( 
@@ -11,6 +11,8 @@ const TodoList = ({todos, onDeleted}) => {
                 <TodoListItem 
                     {...itemProps}
                     onDeleted={() => onDeleted(id)}
+                    onToggleImportant={() => onToggleImportant(id)}
+                    onToggleDone={() => onToggleDone(id)}
                 />
             </li>
         );

@@ -25,7 +25,7 @@ export default class TodoListItem extends React.Component {
     };
 
     render() {
-        const {label, onDeleted} = this.props, // деструктурирование props потому что ф-я render() не принимает параметры
+        const {label, onDeleted, onToggleImportant, onToggleDone} = this.props, // деструктурирование props потому что ф-я render() не принимает параметры
               {done, important} = this.state;
         console.log('done:', done, '\n', 'important:', important);
         let classNames = 'todo-list-item';
@@ -36,13 +36,13 @@ export default class TodoListItem extends React.Component {
             <span className={classNames}>
               <span
                   className="todo-list-item-label"
-                  onClick={this.onLabelClick}>
+                  onClick={onToggleDone}>
                 {label}
               </span>
         
               <button type="button"
                       className="btn btn-outline-success btn-sm float-right"
-                      onClick={this.onMarkImportant}>
+                      onClick={onToggleImportant}>
                 <i className="fa fa-exclamation"/>
               </button>
               {/* Для того чтобы удалить компонент нам нужно его удалить из data, потому что просто так компонент не может удалить сам себя

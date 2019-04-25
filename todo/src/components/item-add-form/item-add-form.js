@@ -3,10 +3,10 @@ import './item-add-form.css';
 
 export default class ItemAddForm extends Component {
     render() {
-        return <a href="javascript:void(0);"
+        return <button
                   className="add-item btn btn-outline-secondary"
                   onClick={() => this.props.onItemAdded('New Item')}>
             Add Item
-        </a>
+        </button>
     }
 }
