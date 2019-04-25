@@ -61,7 +61,19 @@ export default class App extends Component {
         console.log('Toggle Important', id);
     };
     toggleDone = id => {
-        console.log('Toggle Done', id);
+        this.setState(({todoData}) => {
+            // 1 - обновить объект
+            const index = todoData.findIndex((el) => el.id === id),
+                oldItem = todoData[index],
+                newItem = {...oldItem, done: !oldItem.done} // чтобы не изменять старый объект в текущем state
+            // 2 - создать новый массив state с обновлённым элементом
+            const newState = [
+                ...todoData.slice(0, index),
+                newItem,
+                ...todoData.slice(index + 1)
+            ];
+            return {todoData: newState}
+        });
     };
 
     render() {
