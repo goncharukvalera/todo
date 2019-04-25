@@ -13,11 +13,20 @@ export default class App extends Component {
         super();
         this.state = {
             todoData: [
-                {label: 'Drink Coffee', important: false, id: 1},
-                {label: 'Make Awesome App', important: true, id: 2},
-                {label: 'Have a lunch', important: false, id: 3}
+                this.createTodoItem('Drink coffee'),
+                this.createTodoItem('Make Awesome App'),
+                this.createTodoItem('Have a lunch')
             ]
         };
+    }
+    id = 1;
+    createTodoItem(label) {
+        return {
+            label,
+            important: false,
+            done: false,
+            id: this.id++
+        }
     }
     deleteItem = (id) => {
         this.setState(({todoData}) => { // принимаем как аргумент state и сразу деструктурируем
@@ -39,17 +48,11 @@ export default class App extends Component {
     addItem = (text) => {
         // 1 - сгенерировать уникальный id
         // 2 - добавить элемент в массив
-        const d = new Date(),
-            newItem = {
-                label: text,
-                important: false,
-                id: d.getTime()
-            };
         this.setState(({todoData}) => {
             return  {
                 todoData: [
                     ...todoData,
-                    newItem
+                    this.createTodoItem('New Item')
                 ]
             }
         });
