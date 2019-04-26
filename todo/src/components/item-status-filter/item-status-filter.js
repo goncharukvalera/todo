@@ -9,10 +9,13 @@ export default class ItemStatusFilter extends React.Component {
         {name: 'done', label: 'Done'}
     ];
     render() {
-        const filters = this.filters.map(({name, label}) => {
+        const {filter} = this.props,
+              filters = this.filters.map(({name, label}) => {
+            const isActive = filter === name,
+                cls = isActive ? 'btn-info' : 'btn-outline-secondary'; // добавляем зависимость активного класса от текущего фильтра
             return (
                 <button type="button"
-                        className="btn btn-info"
+                        className={`btn ${cls}`}
                         key={name}>
                     {label}
                 </button>
