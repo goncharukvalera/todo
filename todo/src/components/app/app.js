@@ -9,7 +9,7 @@ import './app.css';
 
 export default class App extends Component {
 
-    constructor(){
+    constructor() {
         super();
         this.state = {
             todoData: [
@@ -20,7 +20,9 @@ export default class App extends Component {
             term: ''
         };
     }
+
     id = 1;
+
     createTodoItem(label) {
         return {
             label,
@@ -29,6 +31,7 @@ export default class App extends Component {
             id: this.id++
         }
     }
+
     deleteItem = (id) => {
         this.setState(({todoData}) => { // принимаем как аргумент state и сразу деструктурируем
             // получаем индекс элемента который удаляем
@@ -50,7 +53,7 @@ export default class App extends Component {
         // 1 - сгенерировать уникальный id
         // 2 - добавить элемент в массив
         this.setState(({todoData}) => {
-            return  {
+            return {
                 todoData: [
                     ...todoData,
                     this.createTodoItem(text)
@@ -82,10 +85,16 @@ export default class App extends Component {
             }
         });
     };
+
     search(items, term) {
         if (!term.length) return items;
-        return items.filter(item => item.label.indexOf(term) > -1);
+        // return items.filter(item => item.label.indexOf(term) > -1);
+        return items.filter(item => item.label.toLowerCase().indexOf(term.toLowerCase()) > -1); // чтобы поиск был регистронезависимый
     }
+
+    searchChange = term => {
+        this.setState({term});
+    };
 
     render() {
         const {todoData, term} = this.state,
@@ -93,21 +102,23 @@ export default class App extends Component {
             doneCount = todoData.filter(el => el.done).length,
             todoCount = todoData.length - doneCount;
         return (
-        <div className="todo-app">
-          <AppHeader toDo={todoCount} done={doneCount} />
-          <div className="top-panel d-flex">
-            <SearchPanel />
-            <ItemStatusFilter />
-          </div>
-        
-          <TodoList 
-              todos={visibleItems}
-              onDeleted={(id) => {this.deleteItem(id)}}
-              onToggleImportant={this.toggleImportant}
-              onToggleDone={this.toggleDone}
-          />
-            <ItemAddForm onItemAdded={this.addItem}/>
-        </div>
+            <div className="todo-app">
+                <AppHeader toDo={todoCount} done={doneCount}/>
+                <div className="top-panel d-flex">
+                    <SearchPanel onSearchChange={this.searchChange}/>
+                    <ItemStatusFilter/>
+                </div>
+
+                <TodoList
+                    todos={visibleItems}
+                    onDeleted={(id) => {
+                        this.deleteItem(id)
+                    }}
+                    onToggleImportant={this.toggleImportant}
+                    onToggleDone={this.toggleDone}
+                />
+                <ItemAddForm onItemAdded={this.addItem}/>
+            </div>
         );
     }
 };
