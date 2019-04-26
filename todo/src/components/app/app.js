@@ -17,7 +17,8 @@ export default class App extends Component {
                 this.createTodoItem('Make Awesome App'),
                 this.createTodoItem('Have a lunch')
             ],
-            term: ''
+            term: '',
+            filter: 'active' // all, active, done
         };
     }
 
@@ -95,10 +96,16 @@ export default class App extends Component {
     searchChange = term => {
         this.setState({term});
     };
+    
+    filter(items, filter) {
+        if(filter === 'done') return items.filter(item => item.done);
+        else if(filter === 'active') return items.filter(item => !item.done);
+        return items;
+    }
 
     render() {
-        const {todoData, term} = this.state,
-            visibleItems = this.search(todoData, term),
+        const {todoData, term, filter} = this.state,
+            visibleItems = this.filter(this.search(todoData, term), filter),
             doneCount = todoData.filter(el => el.done).length,
             todoCount = todoData.length - doneCount;
         return (
