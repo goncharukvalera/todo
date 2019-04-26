@@ -16,7 +16,8 @@ export default class App extends Component {
                 this.createTodoItem('Drink coffee'),
                 this.createTodoItem('Make Awesome App'),
                 this.createTodoItem('Have a lunch')
-            ]
+            ],
+            term: ''
         };
     }
     id = 1;
@@ -81,9 +82,14 @@ export default class App extends Component {
             }
         });
     };
+    search(items, term) {
+        if (!term.length) return items;
+        return items.filter(item => item.label.indexOf(term) > -1);
+    }
 
     render() {
-        const {todoData} = this.state,
+        const {todoData, term} = this.state,
+            visibleItems = this.search(todoData, term),
             doneCount = todoData.filter(el => el.done).length,
             todoCount = todoData.length - doneCount;
         return (
@@ -95,7 +101,7 @@ export default class App extends Component {
           </div>
         
           <TodoList 
-              todos={this.state.todoData}
+              todos={visibleItems}
               onDeleted={(id) => {this.deleteItem(id)}}
               onToggleImportant={this.toggleImportant}
               onToggleDone={this.toggleDone}
