@@ -96,12 +96,16 @@ export default class App extends Component {
     searchChange = term => {
         this.setState({term});
     };
-    
+
     filter(items, filter) {
-        if(filter === 'done') return items.filter(item => item.done);
-        else if(filter === 'active') return items.filter(item => !item.done);
+        if (filter === 'done') return items.filter(item => item.done);
+        else if (filter === 'active') return items.filter(item => !item.done);
         return items;
     }
+
+    filterChange = filter => {
+        this.setState({filter});
+    };
 
     render() {
         const {todoData, term, filter} = this.state,
@@ -113,7 +117,7 @@ export default class App extends Component {
                 <AppHeader toDo={todoCount} done={doneCount}/>
                 <div className="top-panel d-flex">
                     <SearchPanel onSearchChange={this.searchChange}/>
-                    <ItemStatusFilter filter={filter}/>
+                    <ItemStatusFilter filter={filter} onFilterChange={this.filterChange}/>
                 </div>
 
                 <TodoList
